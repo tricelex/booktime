@@ -26,6 +26,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST_USER = 'username'
+    EMAIL_HOST = 'smtp.domain.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_PASSWORD = "password"
+else:
+    EMAIL_BACKEND = (
+        'django.core.mail.backends.console.EmailBackend'
+    )
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,7 +63,7 @@ ROOT_URLCONF = 'booktime.urls'
 
 LOGGING = {
     'version': 1,
-    'disable_exisiting_loggers': False,
+    'disable_existing_loggers': False,
     'formatters': {
         'simple': {
             'format': '%(levelname)s %(message)s'

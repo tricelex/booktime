@@ -23,11 +23,17 @@
             <li class="nav-item {% if request.path == "/about-us/" %} active {% endif %}">
                 <a class="nav-link" href="/about-us/">About Us</a>
             </li>
+            <li class="nav-item {% if request.path == "/contact-us/" %} active {% endif %}">
+                <a class="nav-link" href="/contact-us/">Contact Us</a>
+            </li>
         </ul>
     </div>
 </nav>
-{% block content %}
-{% endblock content %}
+<div class="container">
+    {% block content %}
+    {% endblock content %}
+</div>
+
 
 <script src="{% static "js/jquery.min.js" %}"></script>
 <script src="{% static "js/popper.min.js" %}"></script>
