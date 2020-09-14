@@ -1,7 +1,6 @@
 import csv
 import os.path
 from collections import Counter
-
 from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from django.template.defaultfilters import slugify
@@ -31,10 +30,10 @@ class Command(BaseCommand):
                 if tag_created:
                     c['tags_created'] = + 1
             with open(
-                    os.path.join(
-                        options['image_basedir'],
-                        row['image_filename'],
-                    ), 'rb',
+                os.path.join(
+                    options['image_basedir'],
+                    row['image_filename'],
+                ), 'rb',
             ) as f:
                 image = models.ProductImage(
                     product=product,
