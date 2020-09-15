@@ -1,8 +1,10 @@
+from decimal import Decimal
+
 from django.test import TestCase
 from django.urls import reverse
 
 # Create your tests here.
-from main import forms
+from main import forms, models
 
 
 class TestPage(TestCase):
@@ -26,3 +28,17 @@ class TestPage(TestCase):
         self.assertIsInstance(
             response.context['form'], forms.ContactForm
         )
+
+    def test_products_page_returns_active(self):
+        models.Product.objects.create(
+            slug='cathedral-bazaar',
+            price=Decimal('10.00')
+        )
+        models.Product.objects.create(
+            name='A Tale of Two Cities',
+            slug='tale-of-two-cities',
+            price=Decimal('2.00'),
+            active=False,
+        )
+        response = self.client.get
+
