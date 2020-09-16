@@ -13,16 +13,16 @@ class TestImport(TestCase):
     def test_import_data(self):
         out = StringIO()
         args = [
-            'main/fixtures/product-sample.csv',
-            'main/fixtures/product-sampleimages/',
+            "main/fixtures/product-sample.csv",
+            "main/fixtures/product-sampleimages/",
         ]
-        call_command('import_data', *args, stdout=out)
+        call_command("import_data", *args, stdout=out)
 
         expected_out = (
-            'Importing products\n'
-            'Products processed=3 (created=3)\n'
-            'Tags processed=6 (created=1)\n'
-            'Images processed=3\n'
+            "Importing products\n"
+            "Products processed=3 (created=3)\n"
+            "Tags processed=6 (created=1)\n"
+            "Images processed=3\n"
         )
         self.assertEqual(out.getvalue(), expected_out)
         # self.assertEqual(models.Product.objects.count(), 3)
