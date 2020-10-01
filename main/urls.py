@@ -28,6 +28,7 @@ urlpatterns = [
         name="product",
     ),
     path("add_to_basket/", views.add_to_basket, name="add_to_basket"),
+    path("basket/", views.manage_basket, name="basket"),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path(
         "about-us/",
