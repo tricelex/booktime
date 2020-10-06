@@ -13,6 +13,16 @@ urlpatterns = [
         name="address_delete",
     ),
     path(
+        "order/done/",
+        TemplateView.as_view(template_name="order_done.html"),
+        name="checkout_done",
+    ),
+    path(
+        "order/address_select/",
+        views.AddressSelectionView.as_view(),
+        name="address_select",
+    ),
+    path(
         "login/",
         auth_views.LoginView.as_view(
             template_name="login.html",
