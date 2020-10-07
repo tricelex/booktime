@@ -1,41 +1,20 @@
 from decimal import Decimal
 from django.test import TestCase
-from main import models
+from main import models, factories
 
 
 class TestModel(TestCase):
     def test_active_manager_works(self):
-        models.Product.objects.create(
-            name="The cathedral and the bazaar", price=Decimal("10.00")
-        )
-        models.Product.objects.create(name="Pride and Prejudice", price=Decimal("2.00"))
-        models.Product.objects.create(
-            name="A Tale of Two Cities", price=Decimal("2.00"), active=False
-        )
+        factories.ProductFactory.create_batch(2, active=True)
+        factories.ProductFactory(active=False)
         self.assertEqual(len(models.Product.objects.active()), 2)
 
     def test_create_order_works(self):
-        p1 = models.Product.objects.create(
-            name="The cathedral and the bazaar", price=Decimal("10.00")
-        )
-        p2 = models.Product.objects.create(
-            name="A Tale of Two Cities", price=Decimal("2.00")
-        )
-        user1 = models.User.objects.create_user("user1", "abcabcabc")
-        billing = models.Address.objects.create(
-            user=user1,
-            name="Jon Snow",
-            address1="Okota Lagos",
-            city="Lagos",
-            country="uk",
-        )
-        shipping = models.Address.objects.create(
-            user=user1,
-            name="Jon Snow",
-            address1="34 Tarred road Okota Lagos",
-            city="Lagos",
-            country="uk",
-        )
+        p1 = factories.ProductFactory()
+        p2 = factories.ProductFactory()
+        user1 = factories.UserFactory()
+        billing = factories.AddressFactory(user=user1)
+        shipping = factories.AddressFactory(user=user1)
         basket = models.Basket.objects.create(user=user1)
         models.BasketLine.objects.create(basket=basket, product=p1)
         models.BasketLine.objects.create(basket=basket, product=p2)
@@ -46,8 +25,8 @@ class TestModel(TestCase):
         order.refresh_from_db()
 
         self.assertEquals(order.user, user1)
-        self.assertEquals(order.billing_address1, "Okota Lagos")
-        self.assertEquals(order.shipping_address1, "34 Tarred road Okota Lagos")
+        self.assertEquals(order.billing_address1, billing.address1)
+        self.assertEquals(order.shipping_address1, shipping.address1)
         # add more checks here
         self.assertEquals(order.lines.all().count(), 2)
         lines = order.lines.all()
