@@ -22,6 +22,7 @@ urlpatterns = [
         views.AddressSelectionView.as_view(),
         name="address_select",
     ),
+    path("order-dashboard/", views.OrderView.as_view(), name="order-dashboard"),
     path(
         "login/",
         auth_views.LoginView.as_view(

@@ -5,6 +5,7 @@
     <p>Please fill the form below to contact us</p>
     <form method="post">
         {% csrf_token %}
+
         <div class="form-group">
             {{ form.name.label_tag }}
             <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="id_name"
