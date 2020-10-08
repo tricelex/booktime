@@ -1,7 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, DetailView
-from main import views, models, forms
+from rest_framework import routers
+from main import views, models, forms, endpoints
+
+router = routers.DefaultRouter()
+router.register(r"orderlines", endpoints.PaidOrderLineViewSet)
+router.register(r"orders", endpoints.PaidOrderViewSet)
 
 urlpatterns = [
     path("address/", views.AddressListView.as_view(), name="address_list"),
@@ -47,4 +52,5 @@ urlpatterns = [
         name="about_us",
     ),
     path("contact-us/", views.ContactUsView.as_view(), name="contact_us"),
+    path("api/", include(router.urls)),
 ]
