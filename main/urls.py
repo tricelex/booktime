@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, DetailView
 from rest_framework import routers
-from main import views, models, forms, endpoints
+from main import views, models, forms, endpoints, admin
 
 router = routers.DefaultRouter()
 router.register(r"orderlines", endpoints.PaidOrderLineViewSet)
@@ -53,4 +53,7 @@ urlpatterns = [
     ),
     path("contact-us/", views.ContactUsView.as_view(), name="contact_us"),
     path("api/", include(router.urls)),
+    path("admin/", admin.main_admin.urls),
+    path("office-admin/", admin.central_office_admin.urls),
+    path("dispatch-admin/", admin.dispatchers_admin.urls),
 ]
